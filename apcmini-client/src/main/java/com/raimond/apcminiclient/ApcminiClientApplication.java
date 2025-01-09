@@ -1,5 +1,6 @@
 package com.raimond.apcminiclient;
 
+import javafx.application.Application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ApcminiClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApcminiClientApplication.class, args);
+		Application.launch(apcMiniApplication.class,args);
 	}
 
 }
