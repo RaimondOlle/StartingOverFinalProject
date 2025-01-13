@@ -4,6 +4,7 @@ import com.raimond.apcminiclient.apcMiniApplication.StageReadyEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -19,9 +20,10 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/APCmini.fxml")
 	private Resource apcResource;
 	private String applicationTitle;
+	private String springApplicationTitle;
 //	private ApplicationContext applicationContext;
 
-	public StageInitializer(@Value("${spring.application.client.streamdeck.title}") String applicationTitle/*, ApplicationContext applicationContext*/) {
+	public StageInitializer(@Value("${spring.application.client.title}") String applicationTitle/*, ApplicationContext applicationContext*/) {
 		this.applicationTitle = applicationTitle;
 //		this.applicationContext = applicationContext;
 	}
@@ -38,8 +40,11 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			stage.setTitle(applicationTitle);
 			stage.show();
 
+			Image image = new Image("/icons/appIcon.png");
+			stage.getIcons().add(image);
+
 			APCminiController apcMiniController = fxmlLoader.getController();
-			apcMiniController.setBackgroundColor();
+			apcMiniController.setUpPage();
 		} catch (IOException e) {
 			// TODO: deal with exception correctly
 			throw new RuntimeException(e);

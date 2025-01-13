@@ -14,6 +14,10 @@ public class apcMiniApplication extends Application {
 	@Override
 	public void start(Stage stage) {
 		applicationContext.publishEvent(new StageReadyEvent(stage));
+//		stage.heightProperty().addListener((observable, oldValue, newValue) -> {
+//			double heightDiff = newValue.doubleValue() - oldValue.doubleValue();
+//
+//		})
 	}
 
 	@Override
