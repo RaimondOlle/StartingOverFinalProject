@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 
 @Component
+@Log4j2
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/APCmini.fxml")
 	private Resource apcResource;
@@ -46,8 +48,12 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			APCminiController apcMiniController = fxmlLoader.getController();
 			apcMiniController.setUpPage();
 		} catch (IOException e) {
-			// TODO: deal with exception correctly
-			throw new RuntimeException(e);
+//			throw new RuntimeException(e);
+			log.debug(e);
+			log.trace(e);
+			log.error(e);
+			log.info(e);
+			log.info("probably a problem with fxml loader/file");
 		}
 	}
 }
