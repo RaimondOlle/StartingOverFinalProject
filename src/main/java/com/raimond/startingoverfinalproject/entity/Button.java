@@ -9,8 +9,15 @@ public class Button {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	@Column(name = "id")
 	private long id;
+
 	private String name;
 	private short locationOnBoardId;
+
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "page_id", nullable = false)
+	private Page page;
+
 
 	public Button(String name, short locationOnBoardId) {
 		this.name = name;
@@ -48,5 +55,13 @@ public class Button {
 
 	public void setLocationOnBoardId(short locationOnBoardId) {
 		this.locationOnBoardId = locationOnBoardId;
+	}
+
+	public Page getPage() {
+		return page;
+	}
+
+	public void setPage(Page page) {
+		this.page = page;
 	}
 }

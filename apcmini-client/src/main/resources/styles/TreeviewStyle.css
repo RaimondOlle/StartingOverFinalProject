@@ -1,0 +1,9 @@
+.tree-view .virtual-flow .clipped-container {
+    -fx-font: 14px Tahoma;
+    -fx-background-color: #872341;
+    -fx-control-inner-background: #872341;
+}
+
+.tree-view .cell {
+    -fx-background-color: transparent;
+}

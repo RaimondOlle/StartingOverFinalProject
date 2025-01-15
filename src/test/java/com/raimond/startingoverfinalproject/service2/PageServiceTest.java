@@ -1,6 +1,8 @@
 package com.raimond.startingoverfinalproject.service2;
 
+import com.raimond.startingoverfinalproject.entity.Button;
 import com.raimond.startingoverfinalproject.entity.Page;
+import com.raimond.startingoverfinalproject.repository1.ButtonRepository;
 import com.raimond.startingoverfinalproject.repository1.PageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,14 +29,21 @@ class PageServiceTest {
 
 	@Mock
 	private PageRepository pageRepository;
+	@Mock
+	private ButtonRepository buttonRepository;
+
 	@InjectMocks
 	private PageService pageService;
 
 	private Page page;
+	private Button button1, button2;
 
 	@BeforeEach
 	void setUp() {
 		page = new Page("Main Page");
+
+		button1 = new Button("button1", (short) 1);
+		button2 = new Button("button2", (short) 2);
 	}
 
 	@Test

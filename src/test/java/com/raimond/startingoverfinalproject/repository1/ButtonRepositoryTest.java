@@ -1,6 +1,7 @@
 package com.raimond.startingoverfinalproject.repository1;
 
 import com.raimond.startingoverfinalproject.entity.Button;
+import com.raimond.startingoverfinalproject.entity.Page;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,9 @@ class ButtonRepositoryTest {
 	private ButtonRepository buttonRepository;
 	@Autowired
 	private EntityManager entityManager;
-	private Button button;
+	private Button button, button1;
+	@Autowired
+	private PageRepository pageRepository;
 
 	@BeforeEach
 	void setUp() {
@@ -30,6 +33,14 @@ class ButtonRepositoryTest {
 
 		button = new Button();
 		button.setName("Button0");
+		button.setLocationOnBoardId((short) 0);
+		Page page = new Page();
+		page.setTitle("title0");
+		button1 = new Button("Button1", (short) 1);
+		Page savedPage = pageRepository.save(page);
+		button.setPage(savedPage);
+		button1.setPage(savedPage);
+		page.setButtonList(List.of(button, button1));
 	}
 
 	@Test
@@ -42,14 +53,14 @@ class ButtonRepositoryTest {
 		assertThat(savedButton).isNotNull();
 		assertThat(savedButton.getName()).isEqualTo("Button0");
 		assertThat(savedButton.getId()).isNotNull();
-		assertThat(savedButton.getId()).isEqualTo(1L);
+		assertThat(savedButton.getId()).isEqualTo(2L);
 	}
 
 	@Test
 	@DisplayName("Returning non empty list of buttons")
 	void givenTwoButtons_whenFindAllButtons_thenListOfButtonsIsNotEmpty() {
 		// given
-		Button button1 = new Button("Button1", (short) 1);
+//		Button button1 = new Button("Button1", (short) 1);
 		buttonRepository.save(button1);
 		buttonRepository.save(button);
 		// when
@@ -62,7 +73,7 @@ class ButtonRepositoryTest {
 	@DisplayName("Returning buttons")
 	void givenTwoButtons_whenFindAllButtons_thenListOfButtons() {
 		// given
-		Button button1 = new Button("Button1", (short) 1);
+//		Button button1 = new Button("Button1", (short) 1);
 		buttonRepository.save(button1);
 		buttonRepository.save(button);
 		// when
@@ -75,12 +86,12 @@ class ButtonRepositoryTest {
 	@DisplayName("Find a button by it's id number")
 	void givenButton_whenFindButtonById_thenReturnButton() {
 		// given
-		buttonRepository.save(button);
+		buttonRepository.save(button1);
 		// when
-		Optional<Button> optionalButton = buttonRepository.findById(1L);
+		Optional<Button> optionalButton = buttonRepository.findById(2L);
 		// then
 		assertThat(optionalButton.isPresent()).isTrue();
-		assertThat(optionalButton.get()).isEqualTo(button);
+		assertThat(optionalButton.get()).isEqualTo(button1);
 	}
 
 	@Test

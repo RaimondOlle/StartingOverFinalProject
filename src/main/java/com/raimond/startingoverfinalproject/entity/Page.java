@@ -2,6 +2,9 @@ package com.raimond.startingoverfinalproject.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "pages")
 public class Page {
@@ -11,6 +14,17 @@ public class Page {
 	private long id;
 //	@Column(name = "title")
 	private String title;
+
+	@OneToMany(mappedBy = "page", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Button> buttonList;
+
+	public List<Button> getButtonList() {
+		return buttonList;
+	}
+
+	public void setButtonList(List<Button> buttonList) {
+		this.buttonList = buttonList;
+	}
 
 	public Page(long id, String title) {
 		this.id = id;

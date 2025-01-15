@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -42,8 +43,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			stage.setTitle(applicationTitle);
 			stage.show();
 
-			Image image = new Image("/icons/appIcon.png");
+			Image image = new Image("/icons/16x16/drum(6).png");
 			stage.getIcons().add(image);
+//			stage.initStyle(StageStyle.TRANSPARENT);
 
 			APCminiController apcMiniController = fxmlLoader.getController();
 			apcMiniController.setUpPage();

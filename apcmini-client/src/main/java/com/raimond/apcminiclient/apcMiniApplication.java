@@ -18,6 +18,7 @@ public class apcMiniApplication extends Application {
 //			double heightDiff = newValue.doubleValue() - oldValue.doubleValue();
 //
 //		})
+		
 	}
 
 	@Override

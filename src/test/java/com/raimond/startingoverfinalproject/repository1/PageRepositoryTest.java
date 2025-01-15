@@ -1,5 +1,6 @@
 package com.raimond.startingoverfinalproject.repository1;
 
+import com.raimond.startingoverfinalproject.entity.Button;
 import com.raimond.startingoverfinalproject.entity.Page;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -135,5 +136,97 @@ class PageRepositoryTest {
 		// then
 		assertThat(foundPage).isNotNull();
 		assertThat(foundPage).isEqualTo(page);
+	}
+
+	@Test
+	@DisplayName("Test saving page with a button")
+	void givenPage_whenSaving_thenReturnSavedPageWithButton() {
+		// given
+		Button button = new Button();
+		button.setName("button0");
+		button.setLocationOnBoardId((short) 0);
+		button.setPage(page);
+		page.setButtonList(List.of(button));
+		// when
+		Page savedPage = pageRepository.save(page);
+		// then
+		assertThat(savedPage).isNotNull();
+		assertThat(savedPage.getId()).isEqualTo(1L);
+		assertThat(savedPage.getButtonList().size()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("Test saving page with buttons")
+	void givenButton_whenSaving_thenReturnSavedPageWithButtons() {
+		// given
+		Button button = new Button();
+		button.setName("button0");
+		button.setLocationOnBoardId((short) 0);
+		button.setPage(page);
+		Button button1 = new Button();
+		button1.setName("button1");
+		button1.setLocationOnBoardId((short) 1);
+		button1.setPage(page);
+		page.setButtonList(List.of(button,button1));
+		// when
+		Page savedPage = pageRepository.save(page);
+		// then
+		assertThat(savedPage).isNotNull();
+		assertThat(savedPage.getButtonList().size()).isEqualTo(2);
+
+	}
+
+	@Test
+	@DisplayName("Test find a button by it's id number in page")
+	void givenPageAndButton_whenFindButtonById_thenReturnButton() {
+		// given
+		Button button = new Button();
+		button.setName("button0");
+		button.setLocationOnBoardId((short) 0);
+		button.setPage(page);
+		page.setButtonList(List.of(button));
+		// when
+		Page savedPage = pageRepository.save(page);
+		Optional<Button> optionalButton = savedPage.getButtonList().stream().filter(b -> b.getId() == button.getId()).findFirst();
+		// then
+		assertThat(optionalButton.isPresent()).isTrue();
+		assertThat(optionalButton.get()).isEqualTo(button);
+		assertThat(savedPage.getButtonList().size()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("Test find button by it's title in page")
+	void givenPageAndButton_whenFindButtonByTitleInPage_thenReturnButton() {
+		// given
+		Button button = new Button();
+		button.setName("button0");
+		button.setLocationOnBoardId((short) 0);
+		button.setPage(page);
+		page.setButtonList(List.of(button));
+		Page savedPage = pageRepository.save(page);
+		// when
+		Optional<Button> optionalButton = savedPage.getButtonList().stream().filter(button1 -> button1.getName().equals(button.getName())).findFirst();
+		// then
+		assertThat(optionalButton.isPresent()).isTrue();
+		assertThat(optionalButton.get()).isEqualTo(button);
+		assertThat(savedPage.getButtonList().size()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("Test when updating button in page it updates page too")
+	void givenPageAndButton_whenUpdatingButtonInPage_thenReturnUpdatedPage() {
+		// given
+		Button button = new Button();
+		button.setName("button0");
+		button.setLocationOnBoardId((short) 0);
+		button.setPage(page);
+		page.setButtonList(List.of(button));
+		// when
+		Page savedPage = pageRepository.save(page);
+		button.setLocationOnBoardId((short) 1);
+		button.setName("button1");
+		// then
+		assertThat(savedPage).isNotNull();
+		assertThat(savedPage.getButtonList().stream().filter(b -> b.getId() == button.getId()).findFirst().get()).isEqualTo(button);
 	}
 }
